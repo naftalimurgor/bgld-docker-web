@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debugging BGLd Docker</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #f4f4f9, #e0e7ff);
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        h1, h2 {
+            color: #1e3a8a;
+            border-bottom: 2px solid #93c5fd;
+            padding-bottom: 10px;
+        }
+        h1 {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 1.8em;
+            margin-top: 30px;
+        }
+        p {
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+        ul {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+        li {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        pre {
+            background: #1e3a8a;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        code {
+            background: #dbeafe;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        .note {
+            background: #fef3c7;
+            padding: 10px;
+            border-left: 5px solid #d97706;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-style: italic;
+        }
+        a {
+            color: #2563eb;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #1e3a8a;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Debugging BGLd Docker</h1>
+
+        <h2>Things to Check</h2>
+        <ul>
+            <li><strong>RAM utilization</strong> &mdash; <code>bgld</code> is very hungry and typically needs in excess of 1GB. A swap file might be necessary.</li>
+            <li><strong>Disk utilization</strong> &mdash; The Bitgesell blockchain will continue growing and growing and growing. Then it will grow some more. At the time of writing, 40GB+ is necessary. Bitgesell is relatively small with block size 10x smaller than that of Bitcoin.</li>
+        </ul>
+
+        <h2>Viewing bgld Logs</h2>
+        <pre>docker logs bgld</pre>
+
+        <h2>Running Bash in Docker Container</h2>
+        <p class="note"><strong>Note:</strong> This container will be run in the same way as the <code>bgld</code> node, but will not connect to already running containers or processes.</p>
+        <pre>docker run -dp 8454:8454 naftalimurgor/bgld</pre>
+
+        <p>You can also attach bash into a running container to debug a running <code>bgld</code> instance:</p>
+        <pre>docker exec -it bgld bash -l</pre>
+    </div>
+</body>
+</html>

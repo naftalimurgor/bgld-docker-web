@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BGLd for Docker</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #f4f4f9, #e0e7ff);
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        h1, h2 {
+            color: #1e3a8a;
+            text-align: center;
+            border-bottom: 2px solid #93c5fd;
+            padding-bottom: 10px;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 1.8em;
+            margin-top: 30px;
+        }
+        p {
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+        .logo {
+            display: block;
+            margin: 0 auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+        li {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        pre {
+            background: #1e3a8a;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        a {
+            color: #2563eb;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #1e3a8a;
+            text-decoration: underline;
+        }
+        .highlight {
+            background: #dbeafe;
+            padding: 10px;
+            border-left: 5px solid #2563eb;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>BGLd for Docker</h1>
+        <img src="images/Bitgesell.png" alt="Bitgesell Logo" width="300" height="300" class="logo">
+        <p style="text-align: center; font-style: italic;">Docker image that runs the Bitgesell bgld node in a container for easy deployment.</p>
+
+        <h2>Requirements</h2>
+        <ul>
+            <li>Physical machine, cloud instance, or VPS that supports Docker (e.g., Vultr, Digital Ocean, KVM or XEN based VMs) running Ubuntu 18.04 or later</li>
+            <li>At least 10 GB to store the blockchain files (and always growing!)</li>
+            <li>At least 500 MB + 1 GB swap file</li>
+        </ul>
+
+        <h2>Really Fast Quick Start</h2>
+        <p>One-liner for Ubuntu 20.04 LTS machines with JSON-RPC enabled on localhost and adds upstart init script:</p>
+        <pre>curl https://raw.githubusercontent.com/naftalimurgor/bgld-docker/master/bootstrap-host.sh | sh</pre>
+
+        <h2>Quick Start</h2>
+        <ol>
+            <li>Run an instance of Bitgesell node as follows:
+                <pre>docker run -dp 8454:8454 naftalimurgor/bgld:latest</pre>
+            </li>
+            <li>Verify that the container is running and bgld node is downloading the blockchain:
+                <pre>$ docker ps
+CONTAINER ID   IMAGE                COMMAND   CREATED         STATUS         PORTS                                                 NAMES
+304e5a74a539   naftalimurgor/bgld   "BGLd"    5 seconds ago   Up 3 seconds   0.0.0.0:8454->8454/tcp, :::8454->8454/tcp, 8455/tcp   naughty_greider</pre>
+            </li>
+            <li>You can then access the daemon's output thanks to the <a href="https://docs.docker.com/reference/commandline/cli/#logs">docker logs command</a>:
+                <pre>docker logs -f bgld</pre>
+            </li>
+            <li>Install optional init scripts for upstart and systemd are in the <code>init</code> directory.</li>
+        </ol>
+
+        <h2>Documentation</h2>
+        <p class="highlight">Additional documentation in the <a href="https://github.com/naftalimurgor/bgld-docker/tree/main/docs">docs folder</a>.</p>
+    </div>
+</body>
+</html>
